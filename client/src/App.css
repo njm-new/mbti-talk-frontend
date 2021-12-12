@@ -1,2 +1,37 @@
-.App {
+:root {
+  /* Color */
+  --login-btn-color: cornflowerblue;
+  /* Font size */
+  --font-large: 36px;
+  --font-medium: 28px;
+  --font-regular: 18px;
+  --font-small: 16px;
+  --font-micro: 14px;
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+  /* main width */
+  --main-home: 1200px;
+}
+
+body {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  margin: 0;
 }
