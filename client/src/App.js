@@ -1,7 +1,7 @@
 import "./App.css";
-
+import { MbtiPage } from "./pages/MbtiPage";
 function App() {
-  return <div className="App">hello</div>;
+  return <MbtiPage />;
 }
 
 export default App;
