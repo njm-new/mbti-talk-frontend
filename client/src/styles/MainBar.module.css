@@ -1,0 +1,49 @@
+button {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.container {
+  margin: auto;
+  width: var(--main-home);
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.container img {
+  width: 200px;
+  height: 100px;
+  display: block;
+  margin-bottom: -20px;
+}
+
+.container__mbtiList {
+  margin-left: -80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container__mbtiList button {
+  font-size: var(--font-large);
+  font-weight: var(--weight-semi-bold);
+  background-color: white;
+}
+
+.container__mbtiList li:nth-child(2) {
+  margin-left: 100px;
+}
+
+.container__loginBtn {
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--login-btn-color);
+  font-size: var(--font-regular);
+  font-weight: var(--weight-semi-bold);
+  color: white;
+}
