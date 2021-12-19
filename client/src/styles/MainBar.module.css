@@ -7,7 +7,6 @@ button {
 .container {
   margin: auto;
   width: var(--main-home);
-  margin-top: 100px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -38,8 +37,8 @@ button {
 }
 
 .container__loginBtn {
-  width: 100px;
-  height: 40px;
+  width: 140px;
+  height: 50px;
   border: none;
   border-radius: 8px;
   background-color: var(--login-btn-color);

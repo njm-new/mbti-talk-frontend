@@ -1,0 +1,9 @@
+.divStyles {
+  background-color: #fee500;
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

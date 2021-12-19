@@ -1,0 +1,21 @@
+.mainContainer {
+  margin-top: 100px;
+}
+
+.loginMenu {
+  z-index: 100;
+  position: absolute;
+  left: 700px;
+  top: 300px;
+}
+
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 70%;
+  background-color: gray;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

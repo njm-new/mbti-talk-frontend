@@ -1,6 +1,7 @@
 :root {
   /* Color */
   --login-btn-color: cornflowerblue;
+  --logout-btn-color: #f55e51;
   /* Font size */
   --font-large: 36px;
   --font-medium: 28px;
