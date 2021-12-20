@@ -2,20 +2,23 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userLogin, userInfo } from "../atom/User";
+import { BaseUrl } from "../ignore/Base";
 
 export const LoginCallback = () => {
   const history = useNavigate();
   const [login, setLogin] = useRecoilState(userLogin);
   const [info, setInfo] = useRecoilState(userInfo);
   const params = new URL(window.location.href).searchParams;
-  let code = params.get("code");
+  const code = params.get("code");
+  const baseUrl = BaseUrl;
 
   useEffect(() => {
     console.log("fetch");
-    fetch("http://localhost:8080/user/login", {
+    fetch(`${baseUrl}/api/member/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        code: code,
       },
       body: JSON.stringify({
         accessToken: code,
