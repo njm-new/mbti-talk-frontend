@@ -1,6 +1,10 @@
 import styles from "../styles/MainBar.module.css";
 import mbtiIconSrc from "../icon/mbti_icon.png";
-export const MainBar = () => {
+import { MyInfo } from "../components/MyInfo";
+import { userLogin } from "../atom/User";
+import { useRecoilState } from "recoil";
+export const MainBar = ({ loginMenuShow }) => {
+  const [login, setLogin] = useRecoilState(userLogin);
   return (
     <div>
       <div className={styles.container}>
@@ -20,7 +24,16 @@ export const MainBar = () => {
           </ul>
         </section>
         <section>
-          <button className={styles.container__loginBtn}>로그인</button>
+          {login === false ? (
+            <button
+              className={styles.container__loginBtn}
+              onClick={loginMenuShow}
+            >
+              로그인
+            </button>
+          ) : (
+            <MyInfo />
+          )}
         </section>
       </div>
       <hr />
