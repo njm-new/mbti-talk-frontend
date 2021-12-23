@@ -13,7 +13,6 @@ export const LoginCallback = () => {
   const baseUrl = BaseUrl;
 
   useEffect(() => {
-    console.log("fetch");
     fetch(`${baseUrl}/api/member/login`, {
       method: "POST",
       headers: {
@@ -27,32 +26,33 @@ export const LoginCallback = () => {
       if (res.status === 200) {
         res.json().then((data) => {
           window.sessionStorage.setItem("jwt", data.jwt);
-          window.sessionStorage.setItem("userId", data.userInfo.userId);
-          window.sessionStorage.setItem("userMbti", data.userInfo.userMbti);
+          window.sessionStorage.setItem("userId", data.memberInfo.memberId);
+          window.sessionStorage.setItem("userMbti", data.memberInfo.memberMbti);
           window.sessionStorage.setItem(
             "userNickname",
-            data.userInfo.userNickname
+            data.memberInfo.memberNickname
           );
           //window.sessionStorage.setItem("userMbti", data.userInfo.userMbti);
           window.sessionStorage.setItem(
             "userContent",
-            data.userInfo.userContent
+            data.memberInfo.memberContent
           );
-          setLogin(true);
-
           setInfo({
             ...info,
-            userId: data.userInfo.userId,
-            userNickname: data.userInfo.userNickname,
-            userMbti: data.userInfo.userMbti,
-            userContent: data.userInfo.userContent,
+            userId: data.memberInfo.memberId,
+            userNickname: data.memberInfo.memberNickname,
+            userMbti: data.memberInfo.memberMbti,
+            userContent: data.memberInfo.memberContent,
           });
-          history("/");
+          if (data.memberInfo.memberMbti === null) {
+            history("/register");
+          } else {
+            setLogin(true);
+            history("/");
+          }
         });
-      } else if (res.status === 401) {
-        history("/MakeInfo", { accessCode: code });
       } else {
-        console.log("인증에 실패했습니다.");
+        window.alert("로그인에 실패했습니다. 다시 시도해 주세요.");
         history("/");
       }
     });
