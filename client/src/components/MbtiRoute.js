@@ -7,6 +7,7 @@ import { ModifyPage } from "../pages/ModifyPage";
 import { MyPage } from "../pages/MyPage";
 import { ProfilePage } from "../pages/ProfilePage";
 import { LoginCallback } from "./LoginCallback";
+import { RegisterUserPage } from "../pages/RegisterUserPage";
 
 export const MbtiRoute = () => {
   return (
@@ -18,6 +19,7 @@ export const MbtiRoute = () => {
       <Route path="/myinfo" element={<MyPage />} />
       <Route path="/userinfo/:user_id" element={<ProfilePage />} />
       <Route path="/callback" element={<LoginCallback />} />
+      <Route path="/register" element={<RegisterUserPage />} />
     </Routes>
   );
 };
