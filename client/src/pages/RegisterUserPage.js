@@ -75,7 +75,7 @@ export const RegisterUserPage = () => {
           Authorization: window.sessionStorage.getItem("jwt"),
         },
         body: JSON.stringify({
-          memberMbti: mbt,
+          mbti: mbt,
         }),
       }).then((res) => {
         if (res.status === 200) {
@@ -88,6 +88,10 @@ export const RegisterUserPage = () => {
             userMbti: mbt,
             userContent: window.sessionStorage.getItem("userContent"),
           });
+          history("/");
+        } else if (res.status === 403) {
+          window.alert("로그인 만료. 로그인을 다시해 주세요!");
+          window.sessionStorage.clear();
           history("/");
         } else {
           window.alert("설정에 실패했습니다. 다시 시도해 주세요.");

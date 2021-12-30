@@ -26,7 +26,9 @@ export const MyInfo = () => {
     <div className={styles.container}>
       <div className={styles.container__info}>
         <MbtiColor mbti={info.userMbti} />
-        <div>{info.userNickname}</div>
+        <div className={styles.container__info__nickname}>
+          {info.userNickname}
+        </div>
       </div>
       <button className={styles.container__btn} onClick={logOut}>
         로그아웃

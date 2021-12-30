@@ -13,7 +13,7 @@ export const MbtiRoute = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/detail/:post_id" element={<DetailPage />} />
+      <Route path="/detail/:postId" element={<DetailPage />} />
       <Route path="/write" element={<WritePage />} />
       <Route path="/modify/:post_id" element={<ModifyPage />} />
       <Route path="/myinfo" element={<MyPage />} />

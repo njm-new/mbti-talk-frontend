@@ -6,6 +6,7 @@ import { MbtiRoute } from "../components/MbtiRoute";
 import { MainBar } from "../components/MainBar";
 import { LoginMenu } from "../components/LoginMenu";
 import { userLogin, userInfo } from "../atom/User";
+import { GiFlameSpin } from "react-icons/gi";
 
 export const MbtiPage = () => {
   const [loginMenu, loginMenuSet] = useState(false);
@@ -22,7 +23,6 @@ export const MbtiPage = () => {
   useEffect(() => {
     if (window.sessionStorage.getItem("jwt") !== null) {
       setLogin(true);
-
       setInfo({
         ...info,
         userId: window.sessionStorage.getItem("userId"),
@@ -30,25 +30,39 @@ export const MbtiPage = () => {
         userMbti: window.sessionStorage.getItem("userMbti"),
         userContent: window.sessionStorage.getItem("userContent"),
       });
+    } else {
+      setLogin(false);
+      setInfo({
+        ...info,
+        userId: "",
+        userNickname: "",
+        userMbti: "",
+        userContent: "",
+      });
     }
   }, []);
 
   return (
-    <div className={styles.mainContainer}>
-      <MainBar loginMenuShow={loginMenuShow} />
-      {loginMenu === true ? (
-        <>
-          <Draggable nodeRef={nodeRef}>
-            <div ref={nodeRef} className={styles.loginMenu}>
-              <LoginMenu loginMenuUnShow={loginMenuUnShow} />
-            </div>
-          </Draggable>
-          <div className={styles.modalBackground}></div>
-        </>
-      ) : (
-        <></>
-      )}
-      <MbtiRoute />
+    <div>
+      <div className={styles.mainContainerBar}>
+        <MainBar loginMenuShow={loginMenuShow} />
+        {loginMenu === true ? (
+          <div>
+            <Draggable nodeRef={nodeRef}>
+              <div ref={nodeRef} className={styles.loginMenu}>
+                <LoginMenu loginMenuUnShow={loginMenuUnShow} />
+              </div>
+            </Draggable>
+            <div className={styles.modalBackground}></div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+      <hr />
+      <div className={styles.mainContainerContent}>
+        <MbtiRoute />
+      </div>
     </div>
   );
 };

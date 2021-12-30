@@ -36,3 +36,7 @@ ul {
 hr {
   margin: 0;
 }
+
+textarea {
+  resize: none;
+}

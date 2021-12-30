@@ -1,5 +1,5 @@
 import styles from "../styles/MainBar.module.css";
-import mbtiIconSrc from "../icon/mbti_icon.png";
+import logo from "../icon/logo.png";
 import { MyInfo } from "../components/MyInfo";
 import { userLogin } from "../atom/User";
 import { useRecoilState } from "recoil";
@@ -10,7 +10,7 @@ export const MainBar = ({ loginMenuShow }) => {
       <div className={styles.container}>
         <section>
           <button>
-            <img src={mbtiIconSrc} alt="" />
+            <img src={logo} alt="없음" className={styles.container__logo} />
           </button>
         </section>
         <section>
@@ -36,7 +36,6 @@ export const MainBar = ({ loginMenuShow }) => {
           )}
         </section>
       </div>
-      <hr />
     </div>
   );
 };

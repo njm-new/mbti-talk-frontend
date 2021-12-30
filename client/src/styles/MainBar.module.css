@@ -5,29 +5,24 @@ button {
 }
 
 .container {
-  margin: auto;
-  width: var(--main-home);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 10px;
 }
 
-.container img {
+.container__logo {
   width: 200px;
-  height: 100px;
-  display: block;
-  margin-bottom: -20px;
+  height: 40px;
 }
 
 .container__mbtiList {
-  margin-left: -80px;
   display: flex;
   justify-content: space-between;
 }
 
 .container__mbtiList button {
-  font-size: var(--font-large);
+  font-size: 40px;
   font-weight: var(--weight-semi-bold);
   background-color: white;
 }
@@ -45,4 +40,28 @@ button {
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
   color: white;
+}
+
+@media screen and (max-width: 1000px) {
+  .container__mbtiList button {
+    font-size: 30px;
+    font-weight: var(--weight-semi-bold);
+    background-color: white;
+  }
+
+  .container__logo {
+    width: 180px;
+    height: 35px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container__mbtiList {
+    display: none;
+  }
+
+  .container__logo {
+    width: 150px;
+    height: 30px;
+  }
 }
