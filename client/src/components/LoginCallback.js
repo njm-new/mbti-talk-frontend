@@ -26,25 +26,19 @@ export const LoginCallback = () => {
       if (res.status === 200) {
         res.json().then((data) => {
           window.sessionStorage.setItem("jwt", data.jwt);
-          window.sessionStorage.setItem("userId", data.memberInfo.memberId);
-          window.sessionStorage.setItem("userMbti", data.memberInfo.memberMbti);
-          window.sessionStorage.setItem(
-            "userNickname",
-            data.memberInfo.memberNickname
-          );
+          window.sessionStorage.setItem("userId", data.member.memberId);
+          window.sessionStorage.setItem("userMbti", data.member.mbti);
+          window.sessionStorage.setItem("userNickname", data.member.nickname);
           //window.sessionStorage.setItem("userMbti", data.userInfo.userMbti);
-          window.sessionStorage.setItem(
-            "userContent",
-            data.memberInfo.memberContent
-          );
+          window.sessionStorage.setItem("userContent", data.member.content);
           setInfo({
             ...info,
-            userId: data.memberInfo.memberId,
-            userNickname: data.memberInfo.memberNickname,
-            userMbti: data.memberInfo.memberMbti,
-            userContent: data.memberInfo.memberContent,
+            userId: data.member.memberId,
+            userNickname: data.member.nickname,
+            userMbti: data.member.mbti,
+            userContent: data.member.content,
           });
-          if (data.memberInfo.memberMbti === null) {
+          if (data.member.mbti === null) {
             history("/register");
           } else {
             setLogin(true);

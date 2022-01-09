@@ -1,0 +1,77 @@
+.titleDiv {
+  margin-top: 50px;
+}
+
+.titleDiv__boardId {
+  color: red;
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.titleDiv__title {
+  margin-top: 10px;
+  font-size: xx-large;
+  font-weight: 700;
+}
+
+.userInfoDiv {
+  display: flex;
+  margin-top: 10px;
+}
+
+.userInfoDiv__mbti {
+  font-size: large;
+  font-weight: 600;
+}
+
+.userInfoDiv__nickname {
+  font-size: large;
+  color: grey;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.postInfoDiv {
+  color: grey;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.postInfoDiv__time {
+  display: flex;
+  font-size: medium;
+  font-weight: 600;
+}
+
+.postInfoDiv__time__content {
+  margin-left: 3px;
+}
+
+.postInfoDiv__view {
+  margin-left: 15px;
+  display: flex;
+  font-size: medium;
+  font-weight: 600;
+}
+
+.postInfoDiv__view__content {
+  margin-left: 3px;
+}
+
+.contentDiv {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  font-size: large;
+}
+
+.likeDiv {
+  display: flex;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.likeDiv__count {
+  margin-left: 5px;
+}
