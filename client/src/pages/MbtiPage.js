@@ -6,13 +6,14 @@ import { MbtiRoute } from "../components/MbtiRoute";
 import { MainBar } from "../components/MainBar";
 import { LoginMenu } from "../components/LoginMenu";
 import { userLogin, userInfo } from "../atom/User";
-import { GiFlameSpin } from "react-icons/gi";
+import { BiArrowToTop } from "react-icons/bi";
 
 export const MbtiPage = () => {
   const [loginMenu, loginMenuSet] = useState(false);
   const [login, setLogin] = useRecoilState(userLogin);
   const [info, setInfo] = useRecoilState(userInfo);
   const nodeRef = useRef(null);
+  const [boardId, setBoardId] = useState("listAll");
   const loginMenuShow = () => {
     loginMenuSet(true);
   };
@@ -45,7 +46,7 @@ export const MbtiPage = () => {
   return (
     <div>
       <div className={styles.mainContainerBar}>
-        <MainBar loginMenuShow={loginMenuShow} />
+        <MainBar loginMenuShow={loginMenuShow} setBoardId={setBoardId} />
         {loginMenu === true ? (
           <div>
             <Draggable nodeRef={nodeRef}>
@@ -60,9 +61,14 @@ export const MbtiPage = () => {
         )}
       </div>
       <hr />
+
+      <div className={styles.all__contentTopDiv}></div>
       <div className={styles.mainContainerContent}>
-        <MbtiRoute />
+        <MbtiRoute boardId={boardId} />
       </div>
+      <button className={styles.upBtn} onClick={() => window.scroll(0, 0)}>
+        <BiArrowToTop />
+      </button>
     </div>
   );
 };

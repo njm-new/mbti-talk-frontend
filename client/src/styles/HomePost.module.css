@@ -1,0 +1,131 @@
+.container {
+  width: 560px;
+
+  border: 3px solid;
+  border-color: rgb(190, 189, 189);
+}
+
+.container__contentDiv {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container__contentDiv__title {
+  text-align: left;
+  font-size: x-large;
+  font-weight: 600;
+}
+
+.container__contentDiv__content {
+  text-align: left;
+  font-size: 16px;
+  margin-top: 10px;
+  color: gray;
+}
+
+.container__secondDiv {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: large;
+  margin-bottom: 3px;
+}
+
+.container__secondDiv__userInfo {
+  font-weight: 600;
+  display: flex;
+}
+
+.container__secondDiv__userInfo__nickname {
+  margin-left: 5px;
+}
+
+.container__secondDiv__time {
+  color: rgb(165, 161, 161);
+}
+
+.container__hr {
+  border-top: 2px solid rgb(216, 216, 216);
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.container__thirdDiv {
+  font-size: x-large;
+  color: rgb(92, 89, 89);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+}
+
+.container__thirdDiv__view {
+  display: flex;
+}
+
+.container__thirdDiv__view__count {
+  margin-left: 5px;
+  font-size: 22px;
+}
+
+.container__thirdDiv__like {
+  margin-left: 20px;
+  display: flex;
+}
+
+.container__thirdDiv__like__count {
+  font-size: 22px;
+  margin-left: 5px;
+}
+
+.container__thirdDiv__comment {
+  margin-left: 20px;
+  display: flex;
+}
+
+.container__thirdDiv__comment__count {
+  font-size: 22px;
+  margin-left: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 480px;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .container {
+    width: 430px;
+  }
+}
+@media screen and (max-width: 970px) {
+  .container {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    width: 370px;
+  }
+}
+
+@media screen and (max-width: 840px) {
+  .container {
+    width: 330px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}

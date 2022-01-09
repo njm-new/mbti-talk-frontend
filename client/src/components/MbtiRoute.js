@@ -9,10 +9,10 @@ import { ProfilePage } from "../pages/ProfilePage";
 import { LoginCallback } from "./LoginCallback";
 import { RegisterUserPage } from "../pages/RegisterUserPage";
 
-export const MbtiRoute = () => {
+export const MbtiRoute = ({ boardId }) => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePage boardId={boardId} />} />
       <Route path="/detail/:postId" element={<DetailPage />} />
       <Route path="/write" element={<WritePage />} />
       <Route path="/modify/:post_id" element={<ModifyPage />} />
