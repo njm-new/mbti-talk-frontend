@@ -81,17 +81,6 @@ export const Comments = ({ postId }) => {
 
   return (
     <div>
-      <div className={styles.mainName}>댓글</div>
-      {login === false ? (
-        <></>
-      ) : (
-        <div className={styles.myInfoDiv}>
-          <div>
-            <MbtiColor mbti={info.userMbti}></MbtiColor>
-          </div>
-          <div className={styles.myInfoDiv__nickname}>{info.userNickname}</div>
-        </div>
-      )}
       <div>
         <textarea
           className={styles.inputText}
@@ -122,7 +111,9 @@ export const Comments = ({ postId }) => {
       </div>
       <div>
         {comments.map((item) => (
-          <Comment props={item} />
+          <div className={styles.commentDiv}>
+            <Comment props={item} />
+          </div>
         ))}
       </div>
     </div>

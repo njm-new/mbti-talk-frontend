@@ -13,11 +13,13 @@
   --weight-semi-bold: 600;
   --weight-regular: 400;
   /* main width */
-  --main-home: 1200px;
+  --main-home: 1024px;
 }
 
 body {
   margin: 0;
+  font-family: "Nanum Gothic", sans-serif;
+  position: relative;
 }
 
 button {

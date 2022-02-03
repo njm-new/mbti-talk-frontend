@@ -1,0 +1,23 @@
+.container {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+}
+
+.container div:nth-child(1) {
+  flex: 1;
+}
+
+.container div:nth-child(2) {
+  flex: 8;
+}
+.container div:nth-child(3) {
+  flex: 1;
+  text-align: end;
+  color: gray;
+}
+.container div:nth-child(4) {
+  flex: 1;
+  color: gray;
+  text-align: end;
+}

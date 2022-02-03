@@ -1,0 +1,9 @@
+.container {
+  margin-left: 30px;
+}
+.container ul {
+  display: flex;
+}
+.container ul li button {
+  font-size: x-large;
+}

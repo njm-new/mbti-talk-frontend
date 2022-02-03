@@ -6,14 +6,13 @@ import { MbtiRoute } from "../components/MbtiRoute";
 import { MainBar } from "../components/MainBar";
 import { LoginMenu } from "../components/LoginMenu";
 import { userLogin, userInfo } from "../atom/User";
-import { BiArrowToTop } from "react-icons/bi";
+import { SelectMbti } from "../components/SelectMbti";
 
 export const MbtiPage = () => {
   const [loginMenu, loginMenuSet] = useState(false);
   const [login, setLogin] = useRecoilState(userLogin);
   const [info, setInfo] = useRecoilState(userInfo);
   const nodeRef = useRef(null);
-  const [boardId, setBoardId] = useState("listAll");
   const loginMenuShow = () => {
     loginMenuSet(true);
   };
@@ -46,7 +45,7 @@ export const MbtiPage = () => {
   return (
     <div>
       <div className={styles.mainContainerBar}>
-        <MainBar loginMenuShow={loginMenuShow} setBoardId={setBoardId} />
+        <MainBar loginMenuShow={loginMenuShow} />
         {loginMenu === true ? (
           <div>
             <Draggable nodeRef={nodeRef}>
@@ -60,15 +59,11 @@ export const MbtiPage = () => {
           <></>
         )}
       </div>
-      <hr />
-
-      <div className={styles.all__contentTopDiv}></div>
-      <div className={styles.mainContainerContent}>
-        <MbtiRoute boardId={boardId} />
+      <div className={styles.bar}>
+        <div className={styles.bar__content}></div>
       </div>
-      <button className={styles.upBtn} onClick={() => window.scroll(0, 0)}>
-        <BiArrowToTop />
-      </button>
+
+      <MbtiRoute />
     </div>
   );
 };

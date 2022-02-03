@@ -1,9 +1,3 @@
-.mainName {
-  margin-top: 20px;
-  font-size: x-large;
-  font-weight: 600;
-}
-
 .myInfoDiv {
   margin-top: 20px;
   display: flex;
@@ -23,13 +17,14 @@
   border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom-width: 3px;
-  border-bottom-color: lightsteelblue;
+  border-bottom-width: 1px;
+  border-bottom-color: lightgray;
   overflow: hidden;
   align-content: bottom;
   display: block;
   outline: none;
   letter-spacing: -2px;
+  margin-bottom: 20px;
 }
 
 .btnDiv {
@@ -59,4 +54,8 @@
   color: white;
   font-size: medium;
   font-weight: 600;
+}
+
+.commentDiv {
+  margin-top: 15px;
 }

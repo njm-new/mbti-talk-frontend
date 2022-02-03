@@ -1,11 +1,19 @@
-.titleDiv {
-  margin-top: 50px;
+hr {
+  border-top: 1px solid #d4d4d4;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
 }
 
-.titleDiv__boardId {
-  color: red;
-  font-size: x-large;
-  font-weight: 700;
+.titleDiv {
+}
+
+.titleDiv__boardIdDiv {
+  display: flex;
+  align-items: center;
+  font-size: large;
+
+  color: gray;
 }
 
 .titleDiv__title {
@@ -16,7 +24,7 @@
 
 .userInfoDiv {
   display: flex;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .userInfoDiv__mbti {
@@ -34,14 +42,14 @@
 .postInfoDiv {
   color: grey;
   display: flex;
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .postInfoDiv__time {
   display: flex;
+  align-items: center;
   font-size: medium;
-  font-weight: 600;
 }
 
 .postInfoDiv__time__content {
@@ -51,8 +59,8 @@
 .postInfoDiv__view {
   margin-left: 15px;
   display: flex;
+  align-items: center;
   font-size: medium;
-  font-weight: 600;
 }
 
 .postInfoDiv__view__content {
@@ -67,11 +75,17 @@
 
 .likeDiv {
   display: flex;
-  font-size: 20px;
-  font-weight: 400;
+  font-size: medium;
   margin-bottom: 10px;
 }
 
 .likeDiv__count {
   margin-left: 5px;
+}
+
+.comment {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: large;
+  font-weight: 600;
 }
