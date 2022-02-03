@@ -7,11 +7,16 @@ import { userInfo } from "../atom/User";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
+import { OutSideOff } from "../util/OuteSideOff";
+import { useRef } from "react";
 
 export const Comment = ({ props }) => {
   const time = DateToTime(props.createTime);
   const [info, setInfo] = useRecoilState(userInfo);
   const [setting, setSetting] = useState(false);
+  const ref = useRef();
+  const btnRef = useRef();
+  OutSideOff(ref, btnRef, setSetting);
   return (
     <div className={styles.container}>
       <div className={styles.userInfoDiv}>
@@ -32,13 +37,13 @@ export const Comment = ({ props }) => {
       </div>
       <div className={styles.contentInfoDiv}>
         <div className={styles.contentInfoDiv__timeDiv}>
-          <div>
+          <div className={styles.contentInfoDiv__timeDiv__timeIcon}>
             <BiTime />
           </div>
           <div className={styles.contentInfoDiv__timeDiv__time}>{time}</div>
         </div>
         <div className={styles.contentInfoDiv__likeDiv}>
-          <div>
+          <div className={styles.contentInfoDiv__likeDiv__likeIcon}>
             <BiLike />
           </div>
           <div className={styles.contentInfoDiv__likeDiv__count}>
@@ -47,7 +52,7 @@ export const Comment = ({ props }) => {
         </div>
         {props.member.memberId == info.userId ? (
           <div className={styles.contentInfoDiv__extraDiv}>
-            <button onClick={() => setSetting(true)}>
+            <button onClick={() => setSetting(true)} ref={btnRef}>
               <div className={styles.contentInfoDiv__extra}>
                 <BsThreeDots />
               </div>
@@ -55,7 +60,7 @@ export const Comment = ({ props }) => {
             {setting === false ? (
               <></>
             ) : (
-              <div className={styles.contentInfoDiv__extraInfo}>
+              <div className={styles.container__moreInfo} ref={ref}>
                 <ul>
                   <li>
                     <button>수정</button>

@@ -1,15 +1,19 @@
 .mainContainerBar {
-  padding-top: 50px;
-  max-width: var(--main-home);
+  padding-top: 10px;
+  max-width: 800px;
   box-sizing: border-box;
   margin: 0 auto;
+  background-color: #fff;
 }
 
-.mainContainerContent {
-  border-radius: 8px;
-  padding: 20px 20px 100px 20px;
-  max-width: var(--main-home);
-  box-sizing: border-box;
+.bar {
+  width: 100%;
+  border-top: 1px solid #d4d4d4;
+  background-color: #f8f9fa;
+}
+
+.bar__content {
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -29,54 +33,4 @@
   position: absolute;
   width: 100%;
   height: 100%;
-}
-
-.upBtn {
-  position: fixed;
-  color: lightgray;
-  font-size: 80px;
-  right: 8%;
-  bottom: 2%;
-}
-@media screen and (max-width: 1500px) {
-  .upBtn {
-    right: 2%;
-    bottom: 2%;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  .mainContainerBar {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-
-  .mainContainerContent {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-  .upBtn {
-    right: 0%;
-    bottom: 2%;
-  }
-}
-
-@media screen and (max-width: 1000px) {
-  .mainContainerBar {
-    padding-top: 0px;
-  }
-
-  .mainContainerContent {
-    padding-top: 0px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .upBtn {
-    position: fixed;
-    color: lightgray;
-    font-size: 70px;
-    right: 2%;
-    bottom: 2%;
-  }
 }

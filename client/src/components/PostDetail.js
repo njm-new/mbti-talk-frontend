@@ -6,6 +6,7 @@ import { BiTime } from "react-icons/bi";
 import { BsEye } from "react-icons/bs";
 import { BiLike } from "react-icons/bi";
 import { DateToTime } from "../util/DateToTime";
+import { BiChevronRight } from "react-icons/bi";
 
 export const PostDetail = ({ postId }) => {
   const [postItem, setPostItem] = useState({
@@ -41,7 +42,11 @@ export const PostDetail = ({ postId }) => {
   return (
     <div>
       <div className={styles.titleDiv}>
-        <div className={styles.titleDiv__boardId}>{postItem.boardId}</div>
+        <div className={styles.titleDiv__boardIdDiv}>
+          <div>게시판</div>
+          <BiChevronRight />
+          <div>{postItem.boardId}</div>
+        </div>
         <div className={styles.titleDiv__title}>{postItem.title}</div>
         <div className={styles.userInfoDiv}>
           <div className={styles.userInfoDiv__mbti}>
@@ -80,6 +85,7 @@ export const PostDetail = ({ postId }) => {
         <div className={styles.likeDiv__count}>{postItem.likeCount}</div>
       </div>
       <hr />
+      <div className={styles.comment}>댓글 {postItem.commentCount}</div>
     </div>
   );
 };

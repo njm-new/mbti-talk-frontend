@@ -8,12 +8,15 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
-
+.container__logoName {
+  display: flex;
+  align-items: flex-end;
+}
 .container__logo_btn {
-  width: 105px;
-  height: 100px;
+  width: 160px;
+  height: 32px;
 }
 
 .container__logo {
@@ -21,54 +24,56 @@ button {
   height: 100%;
 }
 
-.container__mbtiList {
+.container__right {
   display: flex;
-  justify-content: space-between;
-}
-
-.container__mbtiList button {
-  font-size: 40px;
-  font-weight: var(--weight-semi-bold);
-  background-color: white;
-}
-
-.container__mbtiList li:nth-child(2) {
-  margin-left: 100px;
+  align-items: flex-end;
 }
 
 .container__loginBtn {
-  width: 140px;
-  height: 50px;
-  border: none;
-  border-radius: 8px;
-  background-color: var(--login-btn-color);
+  width: 100px;
+  height: 40px;
+  border: 1px solid #d4d4d4;
   font-size: var(--font-regular);
   font-weight: var(--weight-semi-bold);
+  color: black;
+}
+
+.container__topDiv__sub__btn {
+  font-size: large;
+  background-color: #c62917;
+  margin-left: 10px;
   color: white;
+  width: 100px;
+  height: 40px;
+  border: 1px solid #d4d4d4;
 }
 
-@media screen and (max-width: 1000px) {
-  .container__mbtiList button {
-    font-size: 30px;
-    font-weight: var(--weight-semi-bold);
-    background-color: white;
-  }
-
-  .container__logo_btn {
-    margin-top: 20px;
-    width: 80px;
-    height: 70px;
-  }
+.writePostDiv {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 77%;
+  z-index: 1;
+  padding-top: 250px;
+  overflow-y: auto;
 }
 
-@media screen and (max-width: 768px) {
-  .container__mbtiList {
-    display: none;
-  }
+.writePost {
+  position: relative;
+  background-color: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 250px;
+}
 
-  .container__logo_btn {
-    margin-top: 20px;
-    width: 60px;
-    height: 60px;
-  }
+.modalBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 90%;
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
