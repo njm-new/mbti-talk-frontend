@@ -4,6 +4,7 @@ export const SnsLogin = (name, client_id, redirect_uri) => {
   // eslint-disable-next-line default-case
   switch (name) {
     case "Kakao":
+      window.sessionStorage.setItem("snsType", name);
       return new Kakao(client_id, redirect_uri);
   }
 };

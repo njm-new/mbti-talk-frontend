@@ -102,7 +102,12 @@ export const MyInfo = () => {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => window.sessionStorage.clear()}>
+                  <button
+                    onClick={() => {
+                      window.sessionStorage.clear();
+                      window.location.reload();
+                    }}
+                  >
                     로그아웃
                   </button>
                 </li>

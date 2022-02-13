@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { DateToTime } from "../util/DateToTime";
 import { MbtiColor } from "./MbtiColor";
 import styles from "../styles/HomePost.module.css";
@@ -5,9 +6,20 @@ import { BsEye } from "react-icons/bs";
 import { BiLike } from "react-icons/bi";
 import { AiOutlineComment } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { getPicture } from "../api/http/Fetch";
 
 export const HomePost = ({ props }) => {
   const history = useNavigate();
+  const [imgSet, setImgSet] = useState([]);
+
+  useEffect(() => {
+    getPicture(props.postId)
+      .then((data) => {
+        setImgSet([...data.body]);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <button
@@ -16,14 +28,33 @@ export const HomePost = ({ props }) => {
     >
       <div className={styles.container}>
         <div className={styles.container__contentDiv}>
-          <div className={styles.container__contentDiv__title}>
-            {props.title}
+          <div className={styles.container__contentDiv__Div}>
+            <div className={styles.container__contentDiv__title}>
+              {props.title}
+            </div>
+            <div className={styles.container__contentDiv__content}>
+              {props.content.length > 40
+                ? props.content.slice(0, 40) + "..."
+                : props.content}
+            </div>
           </div>
-          <div className={styles.container__contentDiv__content}>
-            {props.content.length > 40
-              ? props.content.slice(0, 40) + "..."
-              : props.content}
-          </div>
+          {imgSet.length === 0 ? (
+            <></>
+          ) : imgSet.length < 2 ? (
+            <div className={styles.container__contentDiv__img}>
+              <img alt="sorryImg" src={imgSet[0].pictureUrl} />
+            </div>
+          ) : (
+            <div className={styles.container__contentDiv__imgMulti}>
+              <img alt="sorryImg" src={imgSet[0].pictureUrl} />
+              <div
+                className={styles.container__contentDiv__imgMulti__back}
+              ></div>
+              <div className={styles.container__contentDiv__imgMulti__count}>
+                +{imgSet.length - 1}
+              </div>
+            </div>
+          )}
         </div>
         <div className={styles.container__secondDiv}>
           <div className={styles.container__secondDiv__userInfo}>

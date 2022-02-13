@@ -1,28 +1,20 @@
 import styles from "../styles/MyCommentsPage.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HomePostSmall } from "../components/HomePostSmall";
-import { postInfo } from "../data/testPosts";
 import { AiOutlineComment } from "react-icons/ai";
+import { getMyComments } from "../api/http/Fetch";
 
 export const MyCommentsPage = () => {
-  const [posts, setPosts] = useState(
-    postInfo.find((el) => el.pageNum === 1).posts
-  );
-  console.log(posts);
-  const [number, setNumber] = useState(2);
-  const [last, setLast] = useState(false);
-  const moreShow = () => {
-    if (postInfo.find((el) => el.pageNum === number).posts !== false) {
-      console.log("init");
-      setPosts([
-        ...posts,
-        ...postInfo.find((el) => el.pageNum === number).posts,
-      ]);
-      setNumber(number + 1);
-    } else {
-      setLast(true);
-    }
-  };
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getMyComments()
+      .then((data) => {
+        setPosts(data.body);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className={styles.mainBackground}>
       <div className={styles.main}>
@@ -33,15 +25,10 @@ export const MyCommentsPage = () => {
             </div>
             <div>내 댓글 게시글</div>
           </div>
-          {posts.map((item, id) => (
-            <HomePostSmall props={item} key={id} />
-          ))}
-          {last === false ? (
-            <button className={styles.newContainer__bottom} onClick={moreShow}>
-              <div>더보기</div>
-            </button>
-          ) : (
+          {posts === [] ? (
             <></>
+          ) : (
+            posts.map((item, id) => <HomePostSmall props={item} key={id} />)
           )}
         </section>
       </div>

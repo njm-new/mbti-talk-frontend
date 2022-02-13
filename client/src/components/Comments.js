@@ -1,19 +1,33 @@
 import { Comment } from "./Comment";
 import styles from "../styles/Comments.module.css";
-import { useCallback, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
-import { userLogin, userInfo } from "../atom/User";
-import { MbtiColor } from "./MbtiColor";
-import { testComments } from "../data/testComments";
+import { userLogin } from "../atom/User";
+import { getComments, postComments } from "../api/http/Fetch";
+import { Modal } from "../components/Modal";
+import { CommentInsertData, CommentCancelData } from "../data/ModalData";
 
 export const Comments = ({ postId }) => {
-  const id = postId;
-  const [comments, setComments] = useState(testComments);
+  const [comments, setComments] = useState(null);
+  const [commentsCount, setCommentsCount] = useState(null);
   const ref = useRef(null);
   const [login, setLogin] = useRecoilState(userLogin);
-  const [info, setInfo] = useRecoilState(userInfo);
   const [clickInput, setClickInput] = useState(false);
   const [content, setContent] = useState("");
+  const [insertModal, setInsertModal] = useState(false);
+  const insertModalData = CommentInsertData;
+
+  useEffect(() => {
+    getCom();
+  }, []);
+
+  const getCom = () => {
+    const jwt = window.sessionStorage.getItem("jwt");
+    getComments(jwt, postId).then((data) => {
+      setComments(data.body.commentList);
+      setCommentsCount(data.body.commentCount);
+    });
+  };
 
   const handleResizeHeight = () => {
     if (ref === null || ref.current === null) {
@@ -53,23 +67,24 @@ export const Comments = ({ postId }) => {
         return reple.trim();
       };
 
-      const body = {
-        commentId: 1,
-        postId: 1,
-        recommentId: 1,
-        member: {
-          memberId: 1,
-          mbti: info.userMbti,
-          nickname: info.userNickname,
-        },
-        content: contentsReplaceNewline(),
-        likeCount: 200,
-        createTime: Date(),
+      const comment = {
+        postId: postId,
+        memberId: window.sessionStorage.getItem("userId"),
+        content: content,
       };
-      setComments([...comments, body]);
-      setContent("");
+      const jwt = window.sessionStorage.getItem("jwt");
+      postComments(jwt, postId, comment)
+        .then((res) => {
+          if (res.status === 200) {
+            getCom();
+          }
+        })
+        .catch((err) => console.log(err));
       ref.current.style.height = "25px";
     }
+    setClickInput(false);
+    setContent("");
+    setInsertModal(false);
   };
 
   const inputCancel = () => {
@@ -81,13 +96,14 @@ export const Comments = ({ postId }) => {
 
   return (
     <div>
+      <div className={styles.comment}>댓글 {commentsCount}</div>
       <div>
         <textarea
           className={styles.inputText}
           placeholder="댓글을 남겨주세요."
           ref={ref}
           onInput={handleResizeHeight}
-          spellcheck="false"
+          spellCheck="false"
           onClick={inputClick}
           onChange={contentChangeHandler}
           value={content}
@@ -97,25 +113,38 @@ export const Comments = ({ postId }) => {
           <></>
         ) : (
           <div className={styles.btnDiv}>
-            <button
-              className={styles.btnDiv__submitBtn}
-              onClick={onsubmitHandler}
-            >
-              등록
-            </button>
             <button className={styles.btnDiv__cancelBtn} onClick={inputCancel}>
               취소
+            </button>
+            <button
+              className={styles.btnDiv__submitBtn}
+              onClick={() => setInsertModal(true)}
+            >
+              등록
             </button>
           </div>
         )}
       </div>
-      <div>
-        {comments.map((item) => (
-          <div className={styles.commentDiv}>
-            <Comment props={item} />
-          </div>
-        ))}
-      </div>
+      {comments == null ? (
+        <></>
+      ) : (
+        <div>
+          {comments.map((item, id) => (
+            <div className={styles.commentDiv} key={id}>
+              <Comment props={item} key={id} getCom={getCom} />
+            </div>
+          ))}
+        </div>
+      )}
+      {insertModal === false ? (
+        <></>
+      ) : (
+        <Modal
+          content={insertModalData}
+          checkBtn={onsubmitHandler}
+          cancelBtn={() => setInsertModal(false)}
+        />
+      )}
     </div>
   );
 };

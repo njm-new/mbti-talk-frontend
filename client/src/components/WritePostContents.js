@@ -1,22 +1,118 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "../styles/WritePostContents.module.css";
 import { AiOutlinePicture } from "react-icons/ai";
-
+import { postPost } from "../api/http/Fetch";
+import { Modal } from "../components/Modal";
+import { WritePostInfo } from "../atom/WritePostInfo";
+import { useRecoilState } from "recoil";
+import { PostInsertData } from "../data/ModalData";
+import { postPicture } from "../api/http/Fetch";
+import { BsChevronCompactLeft } from "react-icons/bs";
+/*
+function setFormData(formData, data, parentKey) {
+  if (!(formData instanceof FormData)) return;
+  if (!(data instanceof Object)) return;
+  Object.keys(data).forEach((key) => {
+    const val = data[key];
+    if (parentKey) key = `${parentKey}[${key}]`;
+    if (val instanceof Object && !Array.isArray(val)) {
+      return setFormData(formData, val, key);
+    }
+    if (Array.isArray(val)) {
+      val.forEach((v, idx) => {
+        if (v instanceof Object) {
+          setFormData(formData, v, `${key}[${idx}]`);
+        } else {
+          formData.append(`${key}[${idx}]`, v);
+        }
+      });
+    } else {
+      formData.append(key, val);
+    }
+  });
+}
+*/
 export const WritePostContents = ({ setWrite }) => {
   const [post, setPost] = useState({
+    boardId: "",
     title: "",
     content: "",
+    memberId: window.sessionStorage.getItem("userId"),
   });
   const [picture, setPicture] = useState([]);
-
+  const [Selected, setSelected] = useState("ALL");
   const imageRef = useRef(null);
+  const [writePostInfo, setWritePostInfo] = useRecoilState(WritePostInfo);
+  const postInsertData = PostInsertData;
+  const [insertModal, setInsertModal] = useState(false);
 
-  const handleSubmit = (e) => {
+  const openModal = () => {
+    setInsertModal(true);
+  };
+
+  const cancelModal = () => {
+    setInsertModal(false);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const content = post.content.trim();
     const title = post.title.trim();
-    setPost({ ...post, title: title, content: content });
-    window.alert(post.title + " " + post.content);
+
+    // 이미지 업로드
+
+    const formData = new FormData();
+    if (picture !== []) {
+      for (let i = 0; i < picture.length; i++) {
+        formData.append("imageVOList[" + i + "].comment", picture[i].explain);
+        formData.append("imageVOList[" + i + "].file", picture[i].file);
+      }
+      postPicture(formData);
+      for (let pair of formData.entries()) {
+        console.log(`${pair[0]} = ${pair[1]}`);
+      }
+    }
+
+    //제목 내용 업로드
+
+    if (title === "") {
+      window.alert("제목을 입력해주세요.");
+      setInsertModal(false);
+    } else if (content === "") {
+      window.alert("내용을 입력해주세요.");
+      setInsertModal(false);
+    } else {
+      setPost({ ...post, title: title, content: content });
+      if (picture.length !== 0) {
+        postPost(post)
+          .then((data) => {
+            const formData = new FormData();
+            for (let i = 0; i < picture.length; i++) {
+              formData.append(
+                "imageVOList[" + i + "].comment",
+                picture[i].explain.trim()
+              );
+              formData.append("imageVOList[" + i + "].file", picture[i].file);
+              postPicture(formData, data.body.postId)
+                .then((res) => {
+                  if (res.status === 200) {
+                    setWritePostInfo(writePostInfo + 1);
+                    setWrite(false);
+                    document.body.style.overflow = "unset";
+                    setWrite(false);
+                  }
+                })
+                .catch((err) => BsChevronCompactLeft.log(err));
+            }
+          })
+          .catch((err) => console.log(err));
+      } else {
+        await postPost(post);
+        setWritePostInfo(writePostInfo + 1);
+        document.body.style.overflow = "unset";
+        setWrite(false);
+      }
+    }
   };
 
   const handleChangeTitle = (e) => {
@@ -30,7 +126,7 @@ export const WritePostContents = ({ setWrite }) => {
   };
 
   const handleChangeImgExplain = (e) => {
-    const newExplain = e.target.value.trim();
+    const newExplain = e.target.value;
     const num = Number(e.target.name);
     const newpicture = [];
     for (let i = 0; i < picture.length; i++) {
@@ -39,12 +135,14 @@ export const WritePostContents = ({ setWrite }) => {
           num: picture[i].num,
           imgUrl: picture[i].imgUrl,
           explain: picture[i].explain,
+          file: picture[i].file,
         };
       } else {
         newpicture[i] = {
           num: picture[i].num,
           imgUrl: picture[i].imgUrl,
           explain: newExplain,
+          file: picture[i].file,
         };
       }
     }
@@ -85,7 +183,13 @@ export const WritePostContents = ({ setWrite }) => {
           let fileUrls;
           // eslint-disable-next-line no-loop-func
           await fileReader(file).then((dataa) => {
-            fileUrls = { num: imgNum.current, imgUrl: dataa, explain: "" };
+            fileUrls = {
+              num: imgNum.current,
+              imgUrl: dataa,
+              explain: "",
+              file: file,
+            };
+            console.log(fileUrls);
           });
           array = [...array, fileUrls];
           setPicture([...array]);
@@ -120,6 +224,13 @@ export const WritePostContents = ({ setWrite }) => {
     }
     setPicture([...newPicture]);
   };
+  const handleSelect = (e) => {
+    setSelected(e.target.value);
+  };
+  useEffect(() => {
+    setPost({ ...post, boardId: Selected });
+  }, [Selected]);
+
   /*
   useEffect(() => {
     console.log(picture);
@@ -130,7 +241,16 @@ export const WritePostContents = ({ setWrite }) => {
     <div className={styles.container}>
       <div className={styles.container__top}>
         <div></div>
-        <div>글쓰기</div>
+        <div className={styles.container__top__name}>
+          <div>글쓰기</div>
+          <select onChange={handleSelect} value={Selected}>
+            <option value="ALL">전체</option>
+            <option value={window.sessionStorage.getItem("userMbti")}>
+              {window.sessionStorage.getItem("userMbti")}
+            </option>
+          </select>
+        </div>
+
         <button onClick={cancel}>X</button>
       </div>
       <form onSubmit={handleSubmit}>
@@ -183,6 +303,7 @@ export const WritePostContents = ({ setWrite }) => {
                   name={item.num}
                   value={picture[item.num].explain}
                   onChange={handleChangeImgExplain}
+                  spellCheck={false}
                 />
               </div>
             ))}
@@ -200,8 +321,17 @@ export const WritePostContents = ({ setWrite }) => {
           type="file"
           multiple
         ></input>
-        <button onClick={handleSubmit}>등록</button>
+        <button onClick={openModal}>등록</button>
       </div>
+      {insertModal === false ? (
+        <></>
+      ) : (
+        <Modal
+          content={postInsertData}
+          checkBtn={handleSubmit}
+          cancelBtn={cancelModal}
+        />
+      )}
     </div>
   );
 };
