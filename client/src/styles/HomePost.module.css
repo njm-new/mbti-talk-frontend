@@ -10,10 +10,18 @@
 
 .container__contentDiv {
   display: flex;
-  flex-direction: column;
+
   padding: 10px 10px 10px 10px;
   justify-content: center;
   align-items: flex-start;
+}
+
+.container__contentDiv__Div {
+  flex: 8;
+  display: flex;
+  flex-direction: column;
+
+  height: 80px;
 }
 
 .container__contentDiv__title {
@@ -25,8 +33,39 @@
 .container__contentDiv__content {
   text-align: left;
   font-size: medium;
-  margin-top: 10px;
+  margin-top: 20px;
   color: gray;
+}
+
+.container__contentDiv__img img {
+  width: 80px;
+  height: 80px;
+}
+
+.container__contentDiv__imgMulti img {
+  width: 80px;
+  height: 80px;
+}
+
+.container__contentDiv__imgMulti {
+  position: relative;
+}
+
+.container__contentDiv__imgMulti__back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 50%;
+}
+.container__contentDiv__imgMulti__count {
+  position: absolute;
+  left: 25%;
+  top: 30%;
+  color: white;
+  font-size: xx-large;
 }
 
 .container__secondDiv {

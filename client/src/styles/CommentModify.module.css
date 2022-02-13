@@ -1,31 +1,9 @@
-.comment {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: large;
-  font-weight: 600;
-}
-
-.myInfoDiv {
-  margin-top: 20px;
-  display: flex;
-  font-size: larger;
-  font-weight: 400;
-}
-
-.myInfoDiv__nickname {
-  margin-left: 3px;
-}
-
 .inputText {
   height: 25px;
   margin-top: 10px;
   width: 100%;
   font-size: 18px;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom-width: 1px;
-  border-bottom-color: lightgray;
+  border: 1px solid rgb(120, 120, 241);
   overflow: hidden;
   align-content: bottom;
   display: block;

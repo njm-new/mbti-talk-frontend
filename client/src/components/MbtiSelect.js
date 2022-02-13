@@ -1,12 +1,12 @@
 import styles from "../styles/MbtiSelect.module.css";
 
-export const MbtiSelect = ({ mbti, main, sub, num, actives, mbtiSet }) => {
+export const MbtiSelect = ({ item, actives, mbtiSet }) => {
   const active = () => {
-    if (num === "first") {
+    if (item.num === "first") {
       return actives.first;
-    } else if (num === "second") {
+    } else if (item.num === "second") {
       return actives.second;
-    } else if (num === "third") {
+    } else if (item.num === "third") {
       return actives.third;
     } else {
       return actives.fourth;
@@ -14,16 +14,17 @@ export const MbtiSelect = ({ mbti, main, sub, num, actives, mbtiSet }) => {
   };
   const act = active();
   return (
-    <button onClick={() => mbtiSet(num, mbti)}>
+    <button onClick={() => mbtiSet(item.num, item.mbti)}>
       <div
-        className={mbti === act ? styles.container__active : styles.container}
+        className={
+          item.mbti === act ? styles.container__active : styles.container
+        }
       >
-        <div className={styles.container__mbti}>
-          <span>{mbti}</span>
-        </div>
+        <div className={styles.container__mbti}>{item.mbti}</div>
+        <div className={styles.container__hr}></div>
         <div className={styles.container__content}>
-          <div className={styles.container__content__main}>{main}</div>
-          <div className={styles.container__content__sub}>{sub}</div>
+          <div className={styles.container__content__main}>{item.main}</div>
+          <div className={styles.container__content__sub}>{item.sub}</div>
         </div>
       </div>
     </button>

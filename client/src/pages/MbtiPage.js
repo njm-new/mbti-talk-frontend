@@ -62,8 +62,9 @@ export const MbtiPage = () => {
       <div className={styles.bar}>
         <div className={styles.bar__content}></div>
       </div>
-
-      <MbtiRoute />
+      <div className={styles.page}>
+        <MbtiRoute />
+      </div>
     </div>
   );
 };

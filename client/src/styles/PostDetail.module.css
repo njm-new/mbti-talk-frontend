@@ -22,6 +22,19 @@ hr {
   font-weight: 700;
 }
 
+.postInfoBigDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.postInfoBigDiv button {
+  color: gray;
+  font-size: x-large;
+  display: flex;
+  align-items: center;
+}
+
 .userInfoDiv {
   display: flex;
   margin-top: 20px;
@@ -88,4 +101,57 @@ hr {
   margin-bottom: 20px;
   font-size: large;
   font-weight: 600;
+}
+
+.postSettingDiv {
+  position: relative;
+}
+
+.container__moreInfo {
+  position: absolute;
+  border: black solid 1px;
+  background-color: white;
+  border-radius: 5px;
+  top: 0;
+  right: -10px;
+  padding: 10px;
+  width: 32px;
+}
+
+.container__moreInfo ul li button {
+  cursor: pointer;
+}
+
+.container__moreInfo ul li button {
+  font-size: large;
+}
+
+.container__moreInfo ul li:nth-child(2) {
+  margin-top: 6px;
+}
+
+.container__moreInfo ul li:nth-child(3) {
+  margin-top: 6px;
+}
+
+.container__moreInfo ul li button:hover {
+  font-weight: 600;
+}
+
+.imgDiv img {
+  width: 100%;
+  height: 500px;
+}
+
+.imgDiv div {
+  margin-top: 10px;
+  font-size: large;
+}
+
+.imgDiv {
+  margin-bottom: 40px;
+}
+
+.likeDiv__likeActive {
+  color: rgb(83, 83, 245);
 }

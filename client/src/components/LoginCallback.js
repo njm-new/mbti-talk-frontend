@@ -2,58 +2,50 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userLogin, userInfo } from "../atom/User";
-import { BaseUrl } from "../ignore/Base";
+import { postMember } from "../api/http/Fetch";
+import styles from "../styles/LoginCallback.module.css";
 
 export const LoginCallback = () => {
   const history = useNavigate();
   const [login, setLogin] = useRecoilState(userLogin);
   const [info, setInfo] = useRecoilState(userInfo);
   const params = new URL(window.location.href).searchParams;
-  const code = params.get("code");
-  const baseUrl = BaseUrl;
+  const snsCode = params.get("code");
+  const snsType = window.sessionStorage.getItem("snsType");
 
   useEffect(() => {
-    fetch(`${baseUrl}/api/member/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        code: code,
-      },
-      body: JSON.stringify({
-        accessToken: code,
-      }),
-    }).then((res) => {
-      if (res.status === 200) {
-        res.json().then((data) => {
-          window.sessionStorage.setItem("jwt", data.jwt);
-          window.sessionStorage.setItem("userId", data.member.memberId);
-          window.sessionStorage.setItem("userMbti", data.member.mbti);
-          window.sessionStorage.setItem("userNickname", data.member.nickname);
-          //window.sessionStorage.setItem("userMbti", data.userInfo.userMbti);
-          window.sessionStorage.setItem("userContent", data.member.content);
-          setInfo({
-            ...info,
-            userId: data.member.memberId,
-            userNickname: data.member.nickname,
-            userMbti: data.member.mbti,
-            userContent: data.member.content,
-          });
-          if (data.member.mbti === null) {
-            history("/register");
-          } else {
-            setLogin(true);
-            history("/");
-          }
+    const login = postMember(snsType, snsCode);
+    login
+      .then((data) => {
+        window.sessionStorage.setItem("jwt", data.body.accessToken);
+        window.sessionStorage.setItem("userId", data.body.member.memberId);
+        window.sessionStorage.setItem("userMbti", data.body.member.mbti);
+        window.sessionStorage.setItem(
+          "userNickname",
+          data.body.member.nickname
+        );
+        window.sessionStorage.setItem("userContent", data.body.member.content);
+        setInfo({
+          ...info,
+          userId: data.body.member.memberId,
+          userNickname: data.body.member.nickname,
+          userMbti: data.body.member.mbti,
+          userContent: data.body.member.content,
         });
-      } else {
-        window.alert("로그인에 실패했습니다. 다시 시도해 주세요.");
-        history("/");
-      }
-    });
+        if (data.body.member.mbti === null) {
+          history("/register");
+        } else {
+          setLogin(true);
+          history("/");
+        }
+      })
+      .catch((err) => {
+        window.alert("로그인 실패");
+      });
   }, []);
   return (
-    <div>
-      <div>loding...</div>
+    <div className={styles.background}>
+      <div className={styles.container}>loding...</div>
     </div>
   );
 };

@@ -16,6 +16,16 @@ textarea {
   background-color: #fff;
 }
 
+.container__top__name {
+  display: flex;
+  margin-left: 50px;
+}
+
+.container__top__name select {
+  margin-left: 8px;
+  outline: none;
+}
+
 .container__top div:nth-child(2) {
   font-weight: 700;
 }
