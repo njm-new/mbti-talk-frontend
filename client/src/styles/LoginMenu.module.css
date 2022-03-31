@@ -1,12 +1,10 @@
 .container {
-  width: 400px;
+  max-width: 100%;
   height: 200px;
-  border: 1px solid;
-  position: relative;
-  box-shadow: 5px 5px 5px gray;
 }
 
 .container__bar {
+  position: relative;
   background-color: black;
   width: 100%;
   height: 25%;

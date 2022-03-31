@@ -106,6 +106,7 @@ export const MyInfo = () => {
                     onClick={() => {
                       window.sessionStorage.clear();
                       window.location.reload();
+                      history("/");
                     }}
                   >
                     로그아웃

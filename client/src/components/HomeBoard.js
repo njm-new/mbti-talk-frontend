@@ -80,7 +80,7 @@ export const HomeBoard = ({ boardName }) => {
             <FaCrown />
             <div>베스트 게시글</div>
           </div>
-          <div>
+          <div className={styles.moreShow}>
             <button
               onClick={() =>
                 history("/more", {
@@ -97,6 +97,18 @@ export const HomeBoard = ({ boardName }) => {
         ) : (
           allHotBoard.map((item, id) => <HomePostSmall props={item} key={id} />)
         )}
+        <div>
+          <button
+            onClick={() =>
+              history("/more", {
+                state: { boardId: boardName, sub: "hot" },
+              })
+            }
+            className={styles.mobileMoreShow}
+          >
+            더보기
+          </button>
+        </div>
       </div>
       <div className={styles.newContainer__all}>
         <div className={styles.newContainer__all__top}>
@@ -104,7 +116,7 @@ export const HomeBoard = ({ boardName }) => {
             <FaListUl />
             <div>전체 게시글</div>
           </div>
-          <div>
+          <div className={styles.moreShow}>
             <button
               onClick={() =>
                 history("/more", {
@@ -112,7 +124,7 @@ export const HomeBoard = ({ boardName }) => {
                 })
               }
             >
-              더보기
+              <div>더보기</div>
             </button>
           </div>
         </div>
@@ -121,6 +133,18 @@ export const HomeBoard = ({ boardName }) => {
         ) : (
           allBoard.map((item, id) => <HomePostSmall props={item} key={id} />)
         )}
+        <div>
+          <button
+            onClick={() =>
+              history("/more", {
+                state: { boardId: boardName, sub: "all" },
+              })
+            }
+            className={styles.mobileMoreShow}
+          >
+            <div>더보기</div>
+          </button>
+        </div>
       </div>
     </section>
   );

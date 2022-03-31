@@ -20,6 +20,9 @@
   flex: 0.5;
   color: gray;
 }
+.title {
+  color: black;
+}
 .extra {
   display: flex;
   align-items: center;
@@ -46,10 +49,14 @@
   display: flex;
   align-items: center;
 }
-
+.linkeCount {
+  font-size: medium;
+}
 .CountDiv__likeIconActive {
   color: rgb(83, 83, 245);
   font-size: medium;
+  display: flex;
+  align-items: center;
 }
 
 .CountDivTow {
@@ -60,6 +67,7 @@
 
 .commentCount {
   margin-left: 1px;
+  font-size: medium;
 }
 
 .CountDiv__commentIcon {
@@ -67,4 +75,57 @@
   font-size: medium;
   display: flex;
   align-items: center;
+}
+.mobileExtra {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin-top: 0;
+    border-top: 1px solid #e9ecef;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: block;
+  }
+  .title {
+    margin: 10px 0 10px 0;
+    width: 100%;
+  }
+  .title button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .extra {
+    display: none;
+  }
+  .mobileExtra {
+    display: flex;
+  }
+  .mobileExtra__likeDiv {
+    display: flex;
+    align-items: center;
+  }
+  .mobilelikeCount {
+    margin-left: 1px;
+    font-size: 18px;
+    color: gray;
+  }
+  .mobileExtra__commentDiv {
+    margin-left: -10px;
+    display: flex;
+    align-items: center;
+  }
+  .mobileExtra__commentIcon {
+    display: flex;
+    align-items: center;
+    font-size: medium;
+    color: gray;
+  }
+  .mobileExtra__commentCount {
+    font-size: 18px;
+    margin-left: 1px;
+    color: gray;
+  }
 }

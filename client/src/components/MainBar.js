@@ -1,5 +1,5 @@
 import styles from "../styles/MainBar.module.css";
-import logo from "../icon/logo.png";
+import logo from "../icon/mbtitalkLogoBig.png";
 import { MyInfo } from "../components/MyInfo";
 import { userLogin } from "../atom/User";
 import { useRecoilState } from "recoil";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { SelectMbti } from "./SelectMbti";
 import { useState, useRef } from "react";
 import { WritePost } from "../components/WritePost";
+import { RiPencilFill } from "react-icons/ri";
 
 export const MainBar = ({ loginMenuShow }) => {
   const [login, setLogin] = useRecoilState(userLogin);
@@ -31,7 +32,6 @@ export const MainBar = ({ loginMenuShow }) => {
               <img src={logo} alt="없음" className={styles.container__logo} />
             </div>
           </button>
-          <SelectMbti />
         </section>
         <section className={styles.container__right}>
           {login === false ? (
@@ -64,6 +64,12 @@ export const MainBar = ({ loginMenuShow }) => {
           <></>
         )}
       </div>
+      <button
+        className={styles.container__topDiv__sub__btnMobile}
+        onClick={moveWritePage}
+      >
+        <RiPencilFill />
+      </button>
     </div>
   );
 };

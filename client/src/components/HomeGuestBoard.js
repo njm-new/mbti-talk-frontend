@@ -36,7 +36,7 @@ export const HomeGuestBoard = () => {
             <FaListUl />
             <div>전체 게시글</div>
           </div>
-          <div>
+          <div className={styles.moreShow}>
             <button
               onClick={() => {
                 window.alert("로그인을 해주세요.");
@@ -53,6 +53,14 @@ export const HomeGuestBoard = () => {
             <HomePostSmallGuest props={item} key={id} />
           ))
         )}
+        <div>
+          <button
+            onClick={() => window.alert("로그인을 해주세요.")}
+            className={styles.mobileMoreShow}
+          >
+            <div>더보기</div>
+          </button>
+        </div>
       </div>
     </section>
   );

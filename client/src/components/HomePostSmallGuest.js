@@ -12,7 +12,7 @@ export const HomePostSmallGuest = ({ props }) => {
       <div>
         <MbtiColor mbti={props.mbti} />
       </div>
-      <div>
+      <div className={styles.title}>
         <button onClick={() => window.alert("로그인을 해주세요.")}>
           {item.title}
         </button>
@@ -26,7 +26,6 @@ export const HomePostSmallGuest = ({ props }) => {
             >
               <BiLike />
             </button>
-
             <div className={styles.linkeCount}>{item.likeCount}</div>
           </div>
         </div>
@@ -39,6 +38,29 @@ export const HomePostSmallGuest = ({ props }) => {
               <AiOutlineComment />
             </button>
             <div className={styles.commentCount}>{item.commentCount}</div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.mobileExtra}>
+        <div className={styles.mobileExtra__likeDiv}>
+          <button
+            className={styles.CountDiv__likeIcon}
+            onClick={() => window.alert("로그인을 해주세요.")}
+          >
+            <BiLike />
+          </button>
+
+          <div className={styles.mobilelikeCount}>{item.likeCount}</div>
+        </div>
+        <div className={styles.mobileExtra__commentDiv}>
+          <button
+            className={styles.mobileExtra__commentIcon}
+            onClick={() => () => window.alert("로그인을 해주세요.")}
+          >
+            <AiOutlineComment />
+          </button>
+          <div className={styles.mobileExtra__commentCount}>
+            {item.commentCount}
           </div>
         </div>
       </div>

@@ -1,31 +1,70 @@
-.E {
-  color: #03a1fc;
+.ENFJ {
+  color: rgb(250, 180, 50);
+  font-weight: 600;
 }
 
-.I {
-  color: #2c6c91;
+.INFJ {
+  color: rgb(250, 170, 184);
+  font-weight: 600;
 }
 
-.S {
-  color: #3db035;
+.INTJ {
+  color: rgb(81, 81, 247);
+  font-weight: 600;
 }
 
-.N {
-  color: #a847ed;
+.ENTJ {
+  color: rgb(247, 77, 77);
+  font-weight: 600;
 }
 
-.T {
-  color: #f53127;
+.ENFP {
+  color: rgb(218, 218, 44);
+  font-weight: 600;
 }
 
-.F {
-  color: #f23dec;
+.INFP {
+  color: rgb(43, 43, 110);
+  font-weight: 600;
+}
+.INTP {
+  color: rgb(145, 35, 145);
+  font-weight: 600;
 }
 
-.J {
-  color: #cec81a;
+.ENTP {
+  color: rgb(59, 188, 248);
+  font-weight: 600;
 }
-
-.P {
-  color: #f0911d;
+.ESFP {
+  color: rgb(37, 146, 37);
+  font-weight: 600;
+}
+.ISFP {
+  color: rgb(53, 204, 53);
+  font-weight: 600;
+}
+.ISTP {
+  color: rgb(107, 106, 106);
+  font-weight: 600;
+}
+.ESTP {
+  color: rgb(224, 224, 172);
+  font-weight: 600;
+}
+.ESFJ {
+  color: rgba(218, 153, 33, 0.87);
+  font-weight: 600;
+}
+.ISFJ {
+  color: rgb(255, 111, 135);
+  font-weight: 600;
+}
+.ISTJ {
+  color: rgb(44, 44, 44);
+  font-weight: 600;
+}
+.ESTJ {
+  color: rgb(112, 78, 14);
+  font-weight: 600;
 }

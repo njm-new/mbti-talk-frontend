@@ -78,7 +78,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "deploy": "aws s3 sync ./build s3://mbti-talk.com --profile=sample-deploy-s3"
   },
   "eslintConfig": {
     "extends": [

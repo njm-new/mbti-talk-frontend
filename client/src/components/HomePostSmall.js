@@ -10,7 +10,6 @@ import { postLike, deleteLike } from "../api/http/Fetch";
 export const HomePostSmall = ({ props }) => {
   const history = useNavigate();
   const [item, setItem] = useState(props);
-
   const goodLike = () => {
     postLike(item.postId)
       .then((res) => {
@@ -36,7 +35,7 @@ export const HomePostSmall = ({ props }) => {
       <div>
         <MbtiColor mbti={props.mbti} />
       </div>
-      <div>
+      <div className={styles.title}>
         <button onClick={() => history(`/detail/${item.postId}`)}>
           {item.title}
         </button>
@@ -69,6 +68,34 @@ export const HomePostSmall = ({ props }) => {
               <AiOutlineComment />
             </button>
             <div className={styles.commentCount}>{item.commentCount}</div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.mobileExtra}>
+        <div className={styles.mobileExtra__likeDiv}>
+          {item.like === false ? (
+            <button className={styles.CountDiv__likeIcon} onClick={goodLike}>
+              <BiLike />
+            </button>
+          ) : (
+            <button
+              className={styles.CountDiv__likeIconActive}
+              onClick={cancelLike}
+            >
+              <AiFillLike />
+            </button>
+          )}
+          <div className={styles.mobilelikeCount}>{item.likeCount}</div>
+        </div>
+        <div className={styles.mobileExtra__commentDiv}>
+          <button
+            className={styles.mobileExtra__commentIcon}
+            onClick={() => history(`/detail/${item.postId}`)}
+          >
+            <AiOutlineComment />
+          </button>
+          <div className={styles.mobileExtra__commentCount}>
+            {item.commentCount}
           </div>
         </div>
       </div>

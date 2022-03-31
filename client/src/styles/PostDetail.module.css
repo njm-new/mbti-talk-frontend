@@ -90,10 +90,18 @@ hr {
   display: flex;
   font-size: medium;
   margin-bottom: 10px;
+  align-items: center;
+}
+
+.likeDiv button {
+  display: flex;
+  align-items: center;
+  font-size: large;
 }
 
 .likeDiv__count {
   margin-left: 5px;
+  font-size: large;
 }
 
 .comment {
