@@ -1,19 +1,25 @@
 import styles from "../styles/MyProfile.module.css";
-import { userInfo } from "../atom/User";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { nicknameCheck, patchMember, getMember } from "../api/http/Fetch";
 import { Modal } from "../components/Modal";
 
 export const MyProfile = () => {
-  const [user, setUser] = useRecoilState(userInfo);
-  const [info, setInfo] = useState(user);
+  const [userId, setUserId] = useState(window.sessionStorage.getItem("userId"));
+  const [info, setInfo] = useState({
+    userMbti: "",
+    userNickname: "",
+    userContent: "",
+  });
+  const [defualtInfo, setDefualtInfo] = useState({
+    userMbti: "",
+    userNickname: "",
+    userContent: "",
+  });
   const [btn, setBtn] = useState(false);
-  const [checkedNick, setCheckedNick] = useState("");
   const [doubleCheck, setDoubleCheck] = useState(false);
-  const [checkBtn, setCheckBtn] = useState(false);
+  const [checkBtn, setCheckBtn] = useState(true);
   const [modal, setModal] = useState(false);
   const history = useNavigate();
   const regS = /[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gim;
@@ -24,24 +30,43 @@ export const MyProfile = () => {
   };
 
   useEffect(() => {
-    setInfo(user);
-  }, [user]);
+    getMember(userId).then((data) => {
+      setInfo({
+        userMbti: data.body.mbti,
+        userNickname: data.body.nickname,
+        userContent: data.body.content === "null" ? "" : data.body.content,
+      });
+      setDefualtInfo({
+        userMbti: data.body.mbti,
+        userNickname: data.body.nickname,
+        userContent: data.body.content === "null" ? "" : data.body.content,
+      });
+    });
+  }, []);
 
   useEffect(() => {
-    if (info.userNickname !== user.userNickname) {
-      setCheckBtn(true);
-    } else {
-      setCheckBtn(false);
-    }
-    if (
-      info.userContent !== user.userContent ||
-      info.userNickname !== user.userNickname
-    ) {
-      setBtn(true);
+    if (info.userContent !== defualtInfo.userContent) {
+      if (info.userNickname !== defualtInfo.userNickname) {
+        if (doubleCheck) {
+          setBtn(true);
+        } else {
+          setBtn(false);
+        }
+      } else {
+        setBtn(true);
+      }
     } else {
       setBtn(false);
     }
   }, [info]);
+
+  useEffect(() => {
+    if (doubleCheck) {
+      setBtn(true);
+    } else {
+      setBtn(false);
+    }
+  }, [doubleCheck]);
 
   const handleChangeNickname = (e) => {
     const nickname = e.target.value.trim();
@@ -67,108 +92,38 @@ export const MyProfile = () => {
   };
 
   const handleChangeContent = (e) => {
-    //const content = e.target.value.trim();
     const newContent = e.target.value.slice(0, 50);
     setInfo({ ...info, userContent: newContent });
   };
 
   const handleDoubleCheck = () => {
-    const jwt = window.sessionStorage.getItem("jwt");
-    nicknameCheck(jwt, info.userNickname).then((res) => {
+    nicknameCheck(info.userNickname).then((res) => {
       if (res.status === 200) {
-        setCheckedNick(info.userNickname);
         setDoubleCheck(true);
+        setCheckBtn(false);
         window.alert("해당 닉네임을 사용할 수 있습니다.");
       }
     });
   };
 
   const handleSubmit = () => {
-    if (checkBtn === true && doubleCheck === false) {
-      window.alert("중복확인을 해주세요.");
-    } else {
-      if (doubleCheck === true) {
-        const jwt = window.sessionStorage.getItem("jwt");
-        const member = {
-          memberId: window.sessionStorage.getItem("userId"),
-          nickname: checkedNick,
-          mbti: window.sessionStorage.getItem("userMbti"),
-          content: info.userContent,
-        };
-
-        patchMember(jwt, member)
-          .then((res) => {
-            if (res.status === 200) {
-              const id = window.sessionStorage.getItem("userId");
-              getMember(id)
-                .then((data) => {
-                  window.sessionStorage.setItem(
-                    "userNickname",
-                    data.body.nickname
-                  );
-                  window.sessionStorage.setItem(
-                    "userContent",
-                    data.body.content
-                  );
-                  setInfo({
-                    userMbti: data.body.mbti,
-                    userNickname: data.body.nickname,
-                    userId: data.body.memberId,
-                    userContent: data.body.memberContent,
-                  });
-                  setCheckedNick("");
-                  setDoubleCheck(false);
-                  setBtn(false);
-                  setCheckBtn(false);
-                })
-                .catch((err) => console.log(err));
-              setModal(false);
-              window.alert("수정에 성공하였습니다.");
-            }
-          })
-          .catch((err) => console.log(err));
+    const member = {
+      memberId: window.sessionStorage.getItem("userId"),
+      nickname: info.userNickname,
+      mbti: info.userMbti,
+      content: info.userContent,
+    };
+    patchMember(member).then((res) => {
+      if (res.status === 200) {
+        window.sessionStorage.setItem("userNickname", info.userNickname);
+        window.sessionStorage.setItem("userContent", info.userContent);
+        setBtn(false);
+        setCheckBtn(true);
+        setDoubleCheck(false);
       } else {
-        const jwt = window.sessionStorage.getItem("jwt");
-        const member = {
-          memberId: window.sessionStorage.getItem("userId"),
-          nickname: window.sessionStorage.getItem("userNickname"),
-          mbti: window.sessionStorage.getItem("userMbti"),
-          content: info.userContent,
-        };
-
-        patchMember(jwt, member)
-          .then((res) => {
-            if (res.status === 200) {
-              const id = window.sessionStorage.getItem("userId");
-              getMember(id)
-                .then((data) => {
-                  window.sessionStorage.setItem(
-                    "userNickname",
-                    data.body.nickname
-                  );
-                  window.sessionStorage.setItem(
-                    "userContent",
-                    data.body.content
-                  );
-                  setInfo({
-                    userMbti: data.body.mbti,
-                    userNickname: data.body.nickname,
-                    userId: data.body.memberId,
-                    userContent: data.body.memberContent,
-                  });
-                  setCheckedNick("");
-                  setDoubleCheck(false);
-                  setBtn(false);
-                  setCheckBtn(false);
-                })
-                .catch((err) => console.log(err));
-              setModal(false);
-              window.alert("수정에 성공하였습니다.");
-            }
-          })
-          .catch((err) => console.log(err));
+        window.alert("다시 시도해 주세요.");
       }
-    }
+    });
     setModal(false);
   };
 
@@ -221,11 +176,15 @@ export const MyProfile = () => {
             <div>닉네임</div>
             <div>:</div>
             <div className={styles.container__bottom__content__input}>
-              <input
-                value={info.userNickname}
-                onChange={handleChangeNickname}
-                spellCheck="false"
-              ></input>
+              {doubleCheck === true ? (
+                <div className={styles.replaceInput}>{info.userNickname}</div>
+              ) : (
+                <input
+                  value={info.userNickname}
+                  onChange={handleChangeNickname}
+                  spellCheck="false"
+                />
+              )}
               {checkBtn === false ? (
                 <button
                   className={styles.container__bottom__content__input__btn}

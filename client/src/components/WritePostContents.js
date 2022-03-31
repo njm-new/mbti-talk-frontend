@@ -317,7 +317,7 @@ export const WritePostContents = ({ setWrite }) => {
         <input
           ref={imageRef}
           onChange={handleFileOnChange}
-          accept="image/jpeg, image/jpg"
+          accept="image/jpeg, image/jpg, imgage/png"
           type="file"
           multiple
         ></input>

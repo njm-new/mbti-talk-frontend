@@ -22,8 +22,7 @@ export const Comments = ({ postId }) => {
   }, []);
 
   const getCom = () => {
-    const jwt = window.sessionStorage.getItem("jwt");
-    getComments(jwt, postId).then((data) => {
+    getComments(postId).then((data) => {
       setComments(data.body.commentList);
       setCommentsCount(data.body.commentCount);
     });
@@ -72,8 +71,7 @@ export const Comments = ({ postId }) => {
         memberId: window.sessionStorage.getItem("userId"),
         content: content,
       };
-      const jwt = window.sessionStorage.getItem("jwt");
-      postComments(jwt, postId, comment)
+      postComments(postId, comment)
         .then((res) => {
           if (res.status === 200) {
             getCom();

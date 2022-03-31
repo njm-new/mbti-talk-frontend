@@ -6,7 +6,7 @@ import { userLogin, userInfo } from "../atom/User";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import styles from "../styles/RegisterUserPage.module.css";
-import { MbtiColor } from "../components/MbtiColor";
+
 import { patchMember } from "../api/http/Fetch";
 import { Modal } from "../components/Modal";
 import { RegisterModalData } from "../data/ModalData";
@@ -92,7 +92,7 @@ export const RegisterUserPage = () => {
       mbti: mbt,
       content: window.sessionStorage.getItem("userContent"),
     };
-    patchMember(window.sessionStorage.getItem("jwt"), member)
+    patchMember(member)
       .then((res) => {
         if (res.status === 200) {
           window.sessionStorage.setItem("userMbti", mbt);
@@ -120,9 +120,7 @@ export const RegisterUserPage = () => {
         <div className={styles.container__mainMbti}>
           MY MBTI
           <div>
-            <MbtiColor
-              mbti={myMbti.first + myMbti.second + myMbti.third + myMbti.fourth}
-            />
+            {myMbti.first + myMbti.second + myMbti.third + myMbti.fourth}
           </div>
         </div>
         <div className={styles.container__select}>

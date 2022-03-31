@@ -19,8 +19,8 @@ export const PostModifyData = {
 };
 
 export const PostInsertData = {
-  title: "댓글 등록",
-  content: "해당 댓글을 등록하시겠습니까?",
+  title: "게시글 등록",
+  content: "해당 게시글을 등록하시겠습니까?",
 };
 
 export const CommentCancelData = {

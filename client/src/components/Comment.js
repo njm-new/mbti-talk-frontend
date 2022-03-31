@@ -28,8 +28,7 @@ export const Comment = ({ props, getCom }) => {
   OutSideOff(ref, btnRef, setSetting);
 
   const commentCancel = () => {
-    const jwt = window.sessionStorage.getItem("jwt");
-    deleteComments(jwt, props.postId, props.commentId)
+    deleteComments(props.postId, props.commentId)
       .then((res) => {
         if (res.status === 200) {
           getCom();

@@ -1,10 +1,11 @@
 import { BaseUrl, AwsUrl } from "../../ignore/Base";
 
-const baseUrl = BaseUrl;
+//const awsUrl = BaseUrl;
 const awsUrl = AwsUrl;
 
 // post api
-export async function getPost(accessToken, postId) {
+export async function getPost(postId) {
+  const accessToken = window.sessionStorage.getItem("jwt");
   const res = await fetch(`${awsUrl}/posts/${postId}`, {
     method: "GET",
     headers: {
@@ -17,6 +18,9 @@ export async function getPost(accessToken, postId) {
     return data;
   } else if (res.status === 403) {
     window.sessionStorage.clear();
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getPost(postId);
   } else {
     console.log("error");
   }
@@ -41,6 +45,34 @@ export const postPost = async (post) => {
     console.log("postPost 성공");
     const data = await res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await postPost(post);
+  } else {
+    console.log("postPost 실패");
+  }
+};
+
+export const patchPost = async (post, postId) => {
+  const accessToken = window.sessionStorage.getItem("jwt");
+  const res = await fetch(`${awsUrl}/posts/${postId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      boardId: post.boardId,
+      title: post.title,
+      content: post.content,
+      memberId: post.memberId,
+    }),
+  });
+  if (res.status === 200) {
+    return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await patchPost(post, postId);
   } else {
     console.log("postPost 실패");
   }
@@ -57,6 +89,9 @@ export async function deletePost(postId) {
   });
   if (res.status === 200) {
     return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await deletePost(postId);
   } else {
     console.log("deletePost error");
   }
@@ -80,9 +115,8 @@ export const getMember = async (memberId) => {
   } else if (res.status === 404) {
     console.log("id 없음");
   } else if (res.status === 410) {
-    console.log("access token 만료 재요청...");
-    getToken(accessToken);
-    return getMember();
+    await getToken(accessToken);
+    return await getMember(memberId);
   }
 };
 
@@ -109,7 +143,31 @@ export const postMember = async (snsType, snsCode) => {
   }
 };
 
-export const patchMember = async (accessToken, member) => {
+export const postMemberLocal = async (snsType, snsCode) => {
+  const res = await fetch(`${awsUrl}/members/local`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      snsType: snsType,
+      snsCode: snsCode,
+    }),
+  });
+  if (res.status === 200) {
+    const data = res.json();
+    return data;
+  } else if (res.status === 400) {
+    console.log("sns 타입 오류");
+  } else if (res.status === 403) {
+    console.log("카카오 인증 실패");
+  } else {
+    console.log("오류...");
+  }
+};
+
+export const patchMember = async (member) => {
+  const accessToken = window.sessionStorage.getItem("jwt");
   const res = await fetch(`${awsUrl}/members/${member.memberId}`, {
     method: "PATCH",
     headers: {
@@ -130,13 +188,14 @@ export const patchMember = async (accessToken, member) => {
   } else if (res.status === 403) {
     console.log("요청 memberId가 다름");
   } else if (res.status === 410) {
-    console.log("access token 만료 재요청...");
-    getToken(accessToken);
-    console.log("다시 시도해주세요.");
+    await getToken(accessToken);
+    return await patchMember(member);
   }
 };
 
-export const nicknameCheck = async (accessToken, nickname) => {
+export const nicknameCheck = async (nickname) => {
+  const accessToken = window.sessionStorage.getItem("jwt");
+  console.log(`${awsUrl}/members/nickname/${nickname}`);
   const res = await fetch(`${awsUrl}/members/nickname/${nickname}`, {
     method: "GET",
     headers: {
@@ -154,9 +213,8 @@ export const nicknameCheck = async (accessToken, nickname) => {
   } else if (res.status === 409) {
     console.log("닉네임이 중복되었습니다.");
   } else if (res.status === 410) {
-    console.log("access token 만료 재요청...");
-    getToken(accessToken);
-    console.log("다시 시도해주세요.");
+    await getToken(accessToken);
+    return await nicknameCheck(nickname);
   }
 };
 
@@ -174,7 +232,7 @@ export const getToken = async (accessToken) => {
   if (res.status === 200) {
     const data = res.json();
     data.then((data) => {
-      window.sessionStorage.setItem("jwt", data.accessToken);
+      window.sessionStorage.setItem("jwt", data.body.accessToken);
     });
   } else if (res.status === 401) {
     console.log("access token 인증 실패");
@@ -200,6 +258,9 @@ export const getAllHotBoard = async (num) => {
   if (res.status === 200) {
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getAllHotBoard(num);
   } else {
     console.log("getAllHotBoard 실패");
   }
@@ -218,6 +279,9 @@ export const getMbtiHotBoard = async (num, boardId) => {
   if (res.status === 200) {
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getMbtiHotBoard(num, boardId);
   } else {
     console.log("getAllHotBoard 실패");
   }
@@ -236,6 +300,9 @@ export const getAllBoard = async (num) => {
   if (res.status === 200) {
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getAllBoard(num);
   } else {
     console.log("getAllHotBoard 실패");
   }
@@ -254,6 +321,9 @@ export const getMbtiBoard = async (num, boardId) => {
   if (res.status === 200) {
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getMbtiBoard(num, boardId);
   } else {
     console.log("getMbtiBoard 실패");
   }
@@ -271,6 +341,9 @@ export const getMyPosts = async (num) => {
   if (res.status === 200) {
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getMyPosts(num);
   } else {
     console.log("getMyPosts 실패");
   }
@@ -278,7 +351,7 @@ export const getMyPosts = async (num) => {
 
 export const getMyComments = async () => {
   const accessToken = window.sessionStorage.getItem("jwt");
-  const res = await fetch(`${awsUrl}/boards/myComments`, {
+  const res = await fetch(`${awsUrl}/boards/myComment`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -288,13 +361,15 @@ export const getMyComments = async () => {
   if (res.status === 200) {
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getMyComments();
   } else {
     console.log("getMyComments 실패");
   }
 };
 
 export const getGuestBoard = async (num) => {
-  const accessToken = window.sessionStorage.getItem("jwt");
   const res = await fetch(`${awsUrl}/boards/guest?pageNum=${num}`, {
     method: "GET",
     headers: {
@@ -311,7 +386,8 @@ export const getGuestBoard = async (num) => {
 
 // comment api
 
-export const getComments = async (accessToken, postId) => {
+export const getComments = async (postId) => {
+  const accessToken = window.sessionStorage.getItem("jwt");
   const res = await fetch(`${awsUrl}/posts/${postId}/comments`, {
     method: "GET",
     headers: {
@@ -322,12 +398,16 @@ export const getComments = async (accessToken, postId) => {
   if (res.status === 200) {
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getComments(postId);
   } else {
     console.log("getComments 실패");
   }
 };
 
-export const postComments = async (accessToken, postId, comment) => {
+export const postComments = async (postId, comment) => {
+  const accessToken = window.sessionStorage.getItem("jwt");
   const res = await fetch(`${awsUrl}/posts/${postId}/comments`, {
     method: "POST",
     headers: {
@@ -343,6 +423,9 @@ export const postComments = async (accessToken, postId, comment) => {
   if (res.status === 200) {
     console.log("postComments 성공");
     return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await postComments(postId, comment);
   } else {
     console.log("getComments 실패");
   }
@@ -363,12 +446,16 @@ export const patchComments = async (postId, commentId, content) => {
   if (res.status === 200) {
     console.log("patchComments 성공");
     return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await patchComments(postId, commentId, content);
   } else {
     console.log("patchComments 실패");
   }
 };
 
-export const deleteComments = async (accessToken, postId, comment_id) => {
+export const deleteComments = async (postId, comment_id) => {
+  const accessToken = window.sessionStorage.getItem("jwt");
   const res = await fetch(`${awsUrl}/posts/${postId}/comments/${comment_id}`, {
     method: "DELETE",
     headers: {
@@ -379,6 +466,9 @@ export const deleteComments = async (accessToken, postId, comment_id) => {
   if (res.status === 200) {
     console.log("deleteComments 성공");
     return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await deleteComments(postId, comment_id);
   } else {
     console.log("getComments 실패");
   }
@@ -398,6 +488,9 @@ export const postLike = async (postId) => {
   if (res.status === 200) {
     console.log("postLike 성공");
     return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await postLike(postId);
   } else {
     console.log("postLike 실패");
   }
@@ -415,6 +508,9 @@ export const deleteLike = async (postId) => {
   if (res.status === 200) {
     console.log("deleteLike 성공");
     return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await deleteLike(postId);
   } else {
     console.log("deleteLike 실패");
   }
@@ -433,6 +529,9 @@ export const getPicture = async (postId) => {
     console.log("getpicture 성공");
     const data = res.json();
     return data;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await getPicture(postId);
   } else {
     console.log("getPicture 실패");
   }
@@ -451,6 +550,32 @@ export const postPicture = async (formData, postId) => {
   if (res.status === 200) {
     console.log("postpicture 성공");
     return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await postPicture(formData, postId);
+  } else {
+    console.log("postPicture 실패");
+  }
+};
+
+export const deletePicture = async (pictureName, postId) => {
+  const accessToken = window.sessionStorage.getItem("jwt");
+  const res = await fetch(`${awsUrl}/posts/${postId}/images/${pictureName}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      pictureName: pictureName,
+    }),
+  });
+  if (res.status === 200) {
+    console.log("postpicture 성공");
+    return res;
+  } else if (res.status === 410) {
+    await getToken(accessToken);
+    return await deletePicture(pictureName, postId);
   } else {
     console.log("postPicture 실패");
   }

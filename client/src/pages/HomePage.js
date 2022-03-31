@@ -7,7 +7,16 @@ import { HomeGuestBoard } from "../components/HomeGuestBoard";
 
 export const HomePage = () => {
   const [login, setLogin] = useRecoilState(userLogin);
+  const [select, setSelect] = useState(1);
+  const myMbti = window.sessionStorage.getItem("userMbti");
 
+  const handleMbti = () => {
+    setSelect(1);
+  };
+
+  const handleAll = () => {
+    setSelect(2);
+  };
   return (
     <div className={styles.mainBackground}>
       <div className={styles.main}>
@@ -15,8 +24,47 @@ export const HomePage = () => {
           <HomeGuestBoard />
         ) : (
           <>
-            <HomeBoard boardName={window.sessionStorage.getItem("userMbti")} />
-            <div className={styles.main__secondBoard}>
+            <div className={styles.main__titleDiv}>
+              <button
+                onClick={handleMbti}
+                className={
+                  select === 1
+                    ? styles.main__titleDiv__firstActive
+                    : styles.main__titleDiv__first
+                }
+              >
+                <div>{myMbti} 게시판</div>
+              </button>
+              <div className={styles.main__titleDiv__second}></div>
+              <button
+                onClick={handleAll}
+                className={
+                  select === 1
+                    ? styles.main__titleDiv__third
+                    : styles.main__titleDiv__thirdActive
+                }
+              >
+                <div>전체 게시판</div>
+              </button>
+            </div>
+            <div
+              className={
+                select === 1
+                  ? styles.main__firstBoardShow
+                  : styles.main__firstBoard
+              }
+            >
+              <HomeBoard
+                boardName={window.sessionStorage.getItem("userMbti")}
+              />
+            </div>
+            <div
+              className={
+                select === 1
+                  ? styles.main__secondBoard
+                  : styles.main__secondBoardShow
+              }
+            >
               <HomeBoard boardName="전체" />
             </div>
           </>

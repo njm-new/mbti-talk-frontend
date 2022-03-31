@@ -14,16 +14,19 @@ import { deletePost } from "../api/http/Fetch";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../components/Modal";
 import { PostCancelData, PostModifyData } from "../data/ModalData";
+import { ModifyPost } from "./ModifyPost";
 
-export const PostDetail = ({ post }) => {
+export const PostDetail = ({ post, detailPageGetPost }) => {
   const [time, setTime] = useState(0);
   const [postItem, setPostItem] = useState(post);
   const [postSetting, setPostSetting] = useState(false);
   const [cancelModal, setCancelModal] = useState(false);
   const [ModifyModal, setModifyModal] = useState(false);
+  const [modifyPostSetting, setModifyPostSetting] = useState(false);
   const postCancelData = PostCancelData;
   const postModifyData = PostModifyData;
   const history = useNavigate();
+  const memberId = post.memberId.split("-");
 
   const [imgSet, setImgSet] = useState([]);
 
@@ -40,6 +43,10 @@ export const PostDetail = ({ post }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    setPostItem(post);
+  }, [post]);
+
   const delPost = () => {
     setPostSetting(false);
     deletePost(postItem.postId)
@@ -55,7 +62,10 @@ export const PostDetail = ({ post }) => {
     setCancelModal(false);
   };
 
-  const modifyPost = () => {};
+  const modifyPost = () => {
+    setModifyPostSetting(true);
+    setModifyModal(false);
+  };
 
   const postModifyModal = () => {
     setModifyModal(false);
@@ -95,7 +105,7 @@ export const PostDetail = ({ post }) => {
         <div className={styles.titleDiv__boardIdDiv}>
           <div>게시판</div>
           <BiChevronRight />
-          <div>{postItem.boardId}</div>
+          <div>{postItem.boardId === "ALL" ? "전체" : postItem.boardId}</div>
         </div>
         <div className={styles.titleDiv__title}>{postItem.title}</div>
         <div className={styles.userInfoDiv}>
@@ -120,7 +130,7 @@ export const PostDetail = ({ post }) => {
             </div>
           </div>
           <div className={styles.postSettingDiv}>
-            {postItem.memberId === window.sessionStorage.getItem("userId") ? (
+            {memberId[1] === window.sessionStorage.getItem("userId") ? (
               <button onClick={() => setPostSetting(true)} ref={btnRef}>
                 <AiFillSetting />
               </button>
@@ -210,6 +220,16 @@ export const PostDetail = ({ post }) => {
           content={postModifyData}
           checkBtn={modifyPost}
           cancelBtn={postModifyModal}
+        />
+      )}
+      {modifyPostSetting === false ? (
+        <></>
+      ) : (
+        <ModifyPost
+          postItem={postItem}
+          imgSet={imgSet}
+          setModifyPostSetting={setModifyPostSetting}
+          detailPageGetPost={detailPageGetPost}
         />
       )}
     </div>

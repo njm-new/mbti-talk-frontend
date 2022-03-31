@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userLogin, userInfo } from "../atom/User";
-import { postMember } from "../api/http/Fetch";
+import { postMember, postMemberLocal } from "../api/http/Fetch";
 import styles from "../styles/LoginCallback.module.css";
 
 export const LoginCallback = () => {
@@ -41,6 +41,7 @@ export const LoginCallback = () => {
       })
       .catch((err) => {
         window.alert("로그인 실패");
+        history("/");
       });
   }, []);
   return (
