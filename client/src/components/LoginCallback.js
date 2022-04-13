@@ -14,7 +14,7 @@ export const LoginCallback = () => {
   const snsType = window.sessionStorage.getItem("snsType");
 
   useEffect(() => {
-    const login = postMember(snsType, snsCode);
+    const login = postMemberLocal(snsType, snsCode);
     login
       .then((data) => {
         window.sessionStorage.setItem("jwt", data.body.accessToken);

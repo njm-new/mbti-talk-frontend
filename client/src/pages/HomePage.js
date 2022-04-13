@@ -19,6 +19,7 @@ export const HomePage = () => {
   };
   return (
     <div className={styles.mainBackground}>
+      <ins property="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8137167428855344" />
       <div className={styles.main}>
         {login === false ? (
           <HomeGuestBoard />
