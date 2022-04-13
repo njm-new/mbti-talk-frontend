@@ -1,5 +1,5 @@
 import styles from "../styles/MainBar.module.css";
-import logo from "../icon/mbtitalkLogoBig.png";
+import logo from "../icon/mbtiNoBack.png";
 import { MyInfo } from "../components/MyInfo";
 import { userLogin } from "../atom/User";
 import { useRecoilState } from "recoil";

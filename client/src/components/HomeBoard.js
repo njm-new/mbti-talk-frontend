@@ -74,42 +74,6 @@ export const HomeBoard = ({ boardName }) => {
       <div className={styles.newContainer__mainTitle}>
         <div>{boardName} 게시판</div>
       </div>
-      <div className={styles.newContainer__hot}>
-        <div className={styles.newContainer__hot__top}>
-          <div className={styles.newContainer__hot__top__title}>
-            <FaCrown />
-            <div>베스트 게시글</div>
-          </div>
-          <div className={styles.moreShow}>
-            <button
-              onClick={() =>
-                history("/more", {
-                  state: { boardId: boardName, sub: "hot" },
-                })
-              }
-            >
-              더보기
-            </button>
-          </div>
-        </div>
-        {allHotBoard == null ? (
-          <></>
-        ) : (
-          allHotBoard.map((item, id) => <HomePostSmall props={item} key={id} />)
-        )}
-        <div>
-          <button
-            onClick={() =>
-              history("/more", {
-                state: { boardId: boardName, sub: "hot" },
-              })
-            }
-            className={styles.mobileMoreShow}
-          >
-            더보기
-          </button>
-        </div>
-      </div>
       <div className={styles.newContainer__all}>
         <div className={styles.newContainer__all__top}>
           <div className={styles.newContainer__all__top__title}>

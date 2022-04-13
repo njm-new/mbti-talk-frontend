@@ -16,7 +16,7 @@ button {
   align-items: flex-end;
 }
 .container__logo_btn {
-  width: 160px;
+  width: 120px;
   height: 60px;
 }
 
@@ -41,7 +41,7 @@ button {
 
 .container__topDiv__sub__btn {
   font-size: large;
-  background-color: #c62917;
+  background-color: #5d6dbe;
   margin-left: 10px;
   color: white;
   width: 100px;
